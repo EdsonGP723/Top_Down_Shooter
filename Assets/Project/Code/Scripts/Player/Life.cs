@@ -29,25 +29,31 @@ public class Life : MonoBehaviour
         regeneratingShield = false;
     }
 
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Onable()
     {
-        if (collision.gameObject.CompareTag("EnemyBullet"))
+        EventManager.OnPlayerHit += TakeDamage;
+    }
+    private void OnDisable()
+    {
+        EventManager.OnPlayerHit -= TakeDamage;
+    }
+
+
+    private void TakeDamage(float damage)
+    {
+        shield -= damage;
+        if (shield <= 0)
         {
-            if (shield >= 1f)
+            life -= damage;
+            if (life <= 0)
             {
-                shield -= 5f;
+                Dead();
             }
-            else
-            {
-                life -= 5f;
-            }
-            StopCoroutine("RegenerateShield");
-            regeneratingShield = false;
-            StartCoroutine(RegenerateShield());
         }
+        StopCoroutine("RegenerateShield");
+        regeneratingShield = false;
+        StartCoroutine(RegenerateShield());
+
     }
 
     private void Dead()

@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
     private Rigidbody2D rb;
+    public float damage = 3f;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -14,10 +15,11 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = transform.up * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            EventManager.EmitEnemyHit(damage);
             gameObject.SetActive(false);
         }
     }
