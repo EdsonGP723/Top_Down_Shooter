@@ -137,7 +137,7 @@ MonoBehaviour:
     Key: Plugins
     Ordinal: 10
     Priority: 0
-    IconType: 2100
+    IconType: 2600
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
     Key: Project
     Ordinal: 12
     Priority: 0
-    IconType: 2120
+    IconType: 2620
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
