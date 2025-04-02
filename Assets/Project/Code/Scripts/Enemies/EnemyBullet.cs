@@ -26,6 +26,7 @@ public class EnemyBullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             EventManager.EmitPlayerHit(damage);
+            Debug.Log("Haciendo daño al player");
             gameObject.SetActive(false);
         }
     }

@@ -29,7 +29,7 @@ public class Life : MonoBehaviour
         regeneratingShield = false;
     }
 
-    private void Onable()
+    private void OnEnable()
     {
         EventManager.OnPlayerHit += TakeDamage;
     }
@@ -42,6 +42,7 @@ public class Life : MonoBehaviour
     private void TakeDamage(float damage)
     {
         shield -= damage;
+        Debug.Log("Recibiendo daño");
         if (shield <= 0)
         {
             life -= damage;

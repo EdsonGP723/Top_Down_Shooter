@@ -9,7 +9,7 @@ public class EnemyPool : MonoBehaviour
     public List<GameObject> pooledEnemies = new List<GameObject>();
     private int amountToPool = 1;
 
-    [SerializeField] private GameObject enemyPrefab;
+    public GameObject enemyPrefab;
     private void Awake()
     {
         if (instance == null)

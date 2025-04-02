@@ -90,6 +90,8 @@ public class Enemy : MonoBehaviour
 
     private void Dead()
     {
+        WaveManager enemy = FindAnyObjectByType<WaveManager>();
+        enemy.enemiesAlive -= 1;
         gameObject.SetActive(false);
     }
 }
