@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public int maxMisiles = 2;
+    public int misiles = 2;
+
     private Transform aimTransform;
 
     [SerializeField] private Transform shootPoint;
-
-    public int misiles = 2;
 
     private void Awake()
     {

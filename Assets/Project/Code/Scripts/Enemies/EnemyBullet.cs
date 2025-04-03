@@ -29,5 +29,9 @@ public class EnemyBullet : MonoBehaviour
             Debug.Log("Haciendo daño al player");
             gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Limit"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -42,8 +42,7 @@ public class WaveManager : MonoBehaviour
     {
         isWaveActive = true;
         Debug.Log($"Starting Wave {currentWave} with {enemyCount} enemies");
-
-        // Asegurarse de que el pool tenga suficientes enemigos
+        ScoreManager.instance.AddWave(currentWave);
         while (enemyPool.pooledEnemies.Count < enemyCount)
         {
             GameObject newEnemy = Instantiate(enemyPool.enemyPrefab);
@@ -51,7 +50,6 @@ public class WaveManager : MonoBehaviour
             enemyPool.pooledEnemies.Add(newEnemy);
         }
 
-        // Spawning enemies
         for (int i = 0; i < enemyCount; i++)
         {
             GameObject enemy = enemyPool.GetPooledObject();
@@ -67,22 +65,16 @@ public class WaveManager : MonoBehaviour
 
     public void OnEnemyKilled()
     {
+        enemiesAlive--;
         if (enemiesAlive <= 0)
         {
             isWaveActive = false;
-            StartCoroutine(StartNextWaveWithDelay());
+            StoreSystem.instance.OpenStore();
         }
-    }
-
-    private IEnumerator StartNextWaveWithDelay()
-    {
-        yield return new WaitForSeconds(timeBetweenWaves);
-        StartNextWave();
     }
 
     private Vector3 GetRandomSpawnPosition()
     {
-        // Obtener un punto aleatorio fuera de la pantalla
         Camera cam = Camera.main;
         float padding = 2f;
         float randomX = Random.Range(-1f, 1f);

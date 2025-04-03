@@ -19,7 +19,15 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            EventManager.EmitEnemyHit(damage);
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+            gameObject.SetActive(false);
+        }
+        if (collision.gameObject.CompareTag("Limit"))
+        {
             gameObject.SetActive(false);
         }
     }

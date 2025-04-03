@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class Life : MonoBehaviour
 {
+    public float maxLife = 50f;
     public float life = 50f;
     public float shield = 50f;
     public float maxShield = 50f;
     public float shieldRegenDelay = 3f;
     public float shieldRegenRate = 5f;
     private bool regeneratingShield = false;
+    public GameObject gameoverPanel, HUD;
 
 
 
@@ -62,7 +64,8 @@ public class Life : MonoBehaviour
         if (life == 0)
         {
             Time.timeScale = 0f;
-            //Activar panel de game over
+            HUD.SetActive(false);
+            gameoverPanel.SetActive(true);
         }
     }
 

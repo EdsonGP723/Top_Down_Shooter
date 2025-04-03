@@ -38,10 +38,8 @@ public class Enemy : MonoBehaviour
 
     public void Move()
     {
-        // Movimiento básico hacia el objetivo
         if (target != null)
         {
-            // Detenerse al alcanzar la distancia mínima
             float distanceToPlayer = Vector3.Distance(transform.position, target.position);
 
             if (distanceToPlayer > stopDistance)
@@ -57,11 +55,9 @@ public class Enemy : MonoBehaviour
         GameObject bullet = EnemyBulletPool.instance.GetPooledObject();
         if (bullet != null)
         {
-            // Configurar posición y rotación
             bullet.transform.position = shootPoint.position;
             bullet.transform.rotation = shootPoint.rotation;
             bullet.SetActive(true);
-            // Configurar la dirección y velocidad usando el controlador del bullet
             EnemyBullet controlador = bullet.GetComponent<EnemyBullet>();
             if (controlador != null)
             {
@@ -70,16 +66,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        EventManager.OnEnemyHit += TakeDamage;
-    }
-    void OnDisable()
-    {
-        EventManager.OnEnemyHit -= TakeDamage;
-    }
-
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         life -= damage;
         if (life <= 0)
@@ -90,8 +77,11 @@ public class Enemy : MonoBehaviour
 
     private void Dead()
     {
+        ScoreManager.instance.AddScore(100);
+        ScoreManager.instance.TryDropCoin(transform.position);
+
         WaveManager enemy = FindAnyObjectByType<WaveManager>();
-        enemy.enemiesAlive -= 1;
+        enemy.OnEnemyKilled();
         gameObject.SetActive(false);
     }
 }
