@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+
 
 public class StoreSystem : MonoBehaviour
 {
@@ -11,20 +13,25 @@ public class StoreSystem : MonoBehaviour
     [SerializeField] private Gun playerGun;
     [SerializeField] private GameObject storePanel;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private GameObject HUD;
+
+    [Header("Cursor")]
+    [SerializeField] private Texture2D customCursor;
+    [SerializeField] private Vector2 cursorHotspot = Vector2.zero;
 
     [Header("Store Items")]
-    [SerializeField] private int healCost = 100;
-    [SerializeField] private int maxHealthUpgradeCost = 150;
-    [SerializeField] private int maxShieldUpgradeCost = 150;
-    [SerializeField] private int restoreMissilesCost = 75;
-    [SerializeField] private int maxMissilesUpgradeCost = 200;
-    [SerializeField] private int shieldRegenUpgradeCost = 125;
+    private int healCost = 50;
+    private int maxHealthUpgradeCost = 100;
+    private int maxShieldUpgradeCost = 100;
+    private int restoreMissilesCost = 60;
+    private int maxMissilesUpgradeCost = 150;
+    private int shieldRegenUpgradeCost = 100;
 
     [Header("Upgrade Values")]
-    [SerializeField] private float healthIncreaseAmount = 25f;
-    [SerializeField] private float shieldIncreaseAmount = 25f;
-    [SerializeField] private float shieldRegenRateIncrease = 2f;
-    [SerializeField] private int missilesIncreaseAmount = 1;
+    private float healthIncreaseAmount = 25f;
+    private float shieldIncreaseAmount = 25f;
+    private float shieldRegenRateIncrease = 2f;
+    private int missilesIncreaseAmount = 1;
 
     private int currentCoins;
 
@@ -34,10 +41,13 @@ public class StoreSystem : MonoBehaviour
             instance = this;
 
         storePanel.SetActive(false);
+        UnityEngine.Cursor.SetCursor(customCursor, cursorHotspot, CursorMode.Auto);
     }
 
     public void OpenStore()
     {
+        UnityEngine.Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        HUD.SetActive(false);
         storePanel.SetActive(true);
         Time.timeScale = 0f;
         UpdateUI();
@@ -45,7 +55,9 @@ public class StoreSystem : MonoBehaviour
 
     public void CloseStore()
     {
+        UnityEngine.Cursor.SetCursor(customCursor, cursorHotspot, CursorMode.Auto);
         storePanel.SetActive(false);
+        HUD.SetActive(true);
         Time.timeScale = 1f;
         WaveManager.instance.StartNextWave();
     }
